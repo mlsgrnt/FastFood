@@ -1,18 +1,19 @@
-var css = require('sheetify')
-var choo = require('choo')
+const css = require('sheetify');
+const choo = require('choo');
 
-css('tachyons')
+css('tachyons');
 
-var app = choo()
+const app = choo();
 if (process.env.NODE_ENV !== 'production') {
-  app.use(require('choo-devtools')())
+  app.use(require('choo-devtools')());
 } else {
-  app.use(require('choo-service-worker')())
+  app.use(require('choo-service-worker')());
 }
 
-app.use(require('./stores/clicks'))
+app.use(require('./stores/maps'));
+app.use(require('./stores/location'));
 
-app.route('/', require('./views/main'))
-app.route('/*', require('./views/404'))
+app.route('/', require('./views/main'));
+app.route('/*', require('./views/404'));
 
-module.exports = app.mount('body')
+module.exports = app.mount('body');
