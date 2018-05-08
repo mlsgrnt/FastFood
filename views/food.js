@@ -10,6 +10,8 @@ function view(state, emit) {
   }
   function accept(place) {
     state.chosenPlace = place;
+    // temp:
+    window.location = `https://citymapper.com/directions?startcoord=${state.position.latitude}%2C${state.position.longitude}&endcoord=${place.geometry.location.lat}%2C${place.geometry.location.lng}&endname=${place.name}&endaddress=${place.vicinity}`;
     console.log('celebrate!');
   }
 
@@ -21,6 +23,8 @@ function view(state, emit) {
     return html`
     <div>
       ${place.name}
+      <img src="${place.photo}" />
+      rating: ${place.rating}
       <button onclick=${reject}>reject</button>
       <button onclick=${() => accept(place)}>accept</button>
     </div>`;
