@@ -16,15 +16,16 @@ function view(state, emit) {
   }
 
   const Place = function (place) {
+    // TODO: handle 0 items found
     if (place === undefined) {
-      return 'loading';
+      return state.currentPlaceIndex === undefined ? 'loading' : 'You didnt like anything. maybe try again?';
     }
-    console.log(place);
     return html`
     <div>
       ${place.name}
-      <img src="${place.photo}" />
+      <img class="w-30" src="${place.photo}" />
       rating: ${place.rating}
+      ${place.travelTime}
       <button onclick=${reject}>reject</button>
       <button onclick=${() => accept(place)}>accept</button>
     </div>`;

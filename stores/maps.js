@@ -6,6 +6,7 @@ function store(state, emitter) {
   state.places = [];
   emitter.on('DOMContentLoaded', () => {
     emitter.on('maps:findNearby', (food) => {
+      state.places = []; // reset in case this is a second food
       // ""
       fetch(`https://coral-biplane.glitch.me/nearby?location=${state.position.latitude},${state.position.longitude}&keyword=${food}&rankby=distance`, { mode: 'cors' }).then((data) => {
       // fetch(`https://api.foursquare.com/v2/venues/search?ll=${state.position.latitude},${state.position.longitude}&intent=browse&radius=1500&query=${food}&client_id=${id}&client_secret=${secret}&v=20180507`, { mode: 'cors' }).then((data) => {
