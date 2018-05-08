@@ -8,30 +8,15 @@ function view(state, emit) {
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE);
 
   return html`
-    <body class="code lh-copy">
-      <main class="pa3 cf center">
-        hello world
-        <label for="search">
-    search
-  </label>
-  <input id="search" name="search"
-    type="text"
-    required
-    title="Find Food"
-    onchange=${handleSearchChange}
-  >
-  <button onclick=${handleClick}>Find food</button>
-      </main>
-      <ul>
-    ${state.places.map(place => html`<li>${place.name}</li>`)}
-    </ul>
+    <body class="helvetica">
+      <h1>fast food</h1>
+      <ul class="f1" >
+        ${state.foods.map(food => html`<li><a href="/${food.name}" id=${food.name} onclick=${handleClick}>${food.emoji}</a></li>`)}
+      </ul>
     </body>
   `;
 
-  function handleClick() {
-    emit('maps:findNearby', state.food || 'pizza');
-  }
-  function handleSearchChange(e) {
-    state.food = e.target.value;
+  function handleClick(e) {
+    emit('maps:findNearby', e.target.id);
   }
 }
