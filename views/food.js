@@ -27,13 +27,21 @@ function view(state, emit) {
         : 'You didnt like anything. maybe try again?';
     }
     const foodItem = html`
-    <div class="">
-      ${place.name}
-      <img class="w-30" src="${place.photo}" />
-      rating: ${place.rating}
-      ${place.travelTime}
-      <button onclick=${reject}>reject</button>
-      <button onclick=${() => accept(place)}>accept</button>
+    <div class="bg-near-white dark-gray shadow-2 br2 pa2 vh-75 ma1">
+      <img class="w-100 pv2" src="${place.photo}" />
+      <div>
+        <h2 class="pv0 helvetica">${place.name}</h2>
+        <h4>${place.rating} stars</h4>
+        ${
+          place.travelTime
+            ? html`<h4>${place.travelTime} minutes away</h4>`
+            : ''
+        }
+      </div>
+      <div>
+        <button onclick=${reject}>reject</button>
+        <button onclick=${() => accept(place)}>accept</button>
+      </div>
     </div>`;
     foodItem.addEventListener('touchstart', handleTouchStart);
     foodItem.addEventListener('touchmove', handleTouchMove);
@@ -51,21 +59,23 @@ function view(state, emit) {
     function handleTouchMove(e) {
       const [x, y] = [e.changedTouches[0].screenX, e.changedTouches[0].screenY];
       foodItem.style.transform = `translateX(${x - prevX}px)`;
-      console.log(x);
     }
     function handleTouchEnd(e) {
       const [x, y] = [e.changedTouches[0].screenX, e.changedTouches[0].screenY];
       if (x < window.innerWidth / 2) {
         reject();
       }
-      if (x > window.innerWidth - window.innerWidth / 3)
+      if (x > window.innerWidth - window.innerWidth / 8) {
         accept(state.places[state.currentPlaceIndex]);
+        return;
+      }
+      foodItem.style.transform = '';
     }
 
     return foodItem;
   };
   return html`
-    <body class="helvetica">
+    <body class="bg-dark-red helvetica">
     <h1>${
       state.foods.find(food => food.name === state.params.wildcard).emoji
     }</h1>
