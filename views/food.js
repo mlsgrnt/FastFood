@@ -27,11 +27,13 @@ function view(state, emit) {
         : 'You didnt like anything. maybe try again?';
     }
     const foodItem = html`
-    <div class="bg-near-white dark-gray shadow-2 br2 pa2 vh-75 ma1">
+    <div id="${
+      place.id
+    }"class="bg-near-white dark-gray shadow-2 br2 pa3 h-auto min-vh-75 ma1 tl">
       <img class="w-100 pv2" src="${place.photo}" />
       <div>
-        <h2 class="pv0 helvetica">${place.name}</h2>
-        <h4>${place.rating} stars</h4>
+        <h3 class="mb0 pb0 helvetica">${place.name}</h3>
+        <h4 class="mv0 pv0 gray">${place.rating} stars</h4>
         ${
           place.travelTime
             ? html`<h4>${place.travelTime} minutes away</h4>`
@@ -75,7 +77,7 @@ function view(state, emit) {
     return foodItem;
   };
   return html`
-    <body class="bg-dark-red helvetica">
+    <body class="bg-light-red helvetica tc">
     <h1>${
       state.foods.find(food => food.name === state.params.wildcard).emoji
     }</h1>
