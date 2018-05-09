@@ -19,7 +19,7 @@ function view(state, emit) {
     console.log('celebrate!');
   }
 
-  const Place = function(place) {
+  const Place = function (place) {
     // TODO: handle 0 items found
     if (place === undefined) {
       return state.currentPlaceIndex === undefined
@@ -28,17 +28,17 @@ function view(state, emit) {
     }
     const foodItem = html`
     <div id="${
-      place.id
-    }"class="bg-near-white dark-gray shadow-2 br2 pa3 h-auto min-vh-75 ma1 tl">
+  place.id
+}"class="bg-near-white dark-gray shadow-2 br2 pa3 h-auto min-vh-75 ma1 tl">
       <img class="w-100 pv2" src="${place.photo}" />
       <div>
         <h3 class="mb0 pb0 helvetica">${place.name}</h3>
         <h4 class="mv0 pv0 gray">${place.rating} stars</h4>
         ${
-          place.travelTime
-            ? html`<h4>${place.travelTime} minutes away</h4>`
-            : ''
-        }
+  place.travelTime
+    ? html`<h4>${place.travelTime} minutes away</h4>`
+    : ''
+}
       </div>
       <div>
         <button onclick=${reject}>reject</button>
@@ -55,7 +55,7 @@ function view(state, emit) {
     function handleTouchStart(e) {
       [prevX, prevY] = [
         e.changedTouches[0].screenX,
-        e.changedTouches[0].screenY
+        e.changedTouches[0].screenY,
       ];
     }
     function handleTouchMove(e) {
@@ -79,8 +79,8 @@ function view(state, emit) {
   return html`
     <body class="bg-light-red helvetica tc">
     <h1>${
-      state.foods.find(food => food.name === state.params.wildcard).emoji
-    }</h1>
+  state.foods.find(food => food.name === state.params.wildcard).emoji
+}</h1>
     ${Place(state.places[state.currentPlaceIndex])}
     </body>
   `;

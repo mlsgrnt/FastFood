@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-service-worker')());
 }
 
-app.use(state => {
+app.use((state) => {
   state.foods = [
     { name: 'korean', emoji: '🍜' },
     { name: 'spaghetti', emoji: '🍝' },
@@ -29,7 +29,7 @@ app.use(state => {
     { name: 'taco', emoji: '🌮' },
     { name: 'burrito', emoji: '🌯' },
     { name: 'bakery', emoji: '🥖' },
-    { name: 'pancakes', emoji: '🥞' }
+    { name: 'pancakes', emoji: '🥞' },
   ];
 });
 app.use(require('./stores/maps'));
