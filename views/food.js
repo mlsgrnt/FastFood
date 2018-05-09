@@ -30,7 +30,7 @@ function view(state, emit) {
     <div id="${
   place.id
 }"class="bg-near-white dark-gray shadow-2 br2 pa3 h-auto min-vh-75 ma1 tl">
-      <img class="w-100 pv2" src="${place.photo}" />
+      <img class="w-100 pv2 h-max-5" src="${place.photo}" />
       <div>
         <h3 class="mb0 pb0 helvetica">${place.name}</h3>
         <h4 class="mv0 pv0 gray">${place.rating} stars</h4>
@@ -51,6 +51,10 @@ function view(state, emit) {
 
     let prevX = null;
     let prevY = null;
+    let readyToFade = false;
+    let currentTouch = null;
+
+    const rightSwipeThreshold = window.innerWidth - (window.innerWidth / 4);
 
     function handleTouchStart(e) {
       [prevX, prevY] = [
@@ -59,22 +63,37 @@ function view(state, emit) {
       ];
     }
     function handleTouchMove(e) {
+      currentTouch = e.changedTouches[0].identifier;
       const [x, y] = [e.changedTouches[0].screenX, e.changedTouches[0].screenY];
       foodItem.style.transform = `translateX(${x - prevX}px)`;
+      if (x < prevX && prevX > 150) {
+        readyToFade = true;
+      }
+
+      foodItem.style.opacity = x < 150 && readyToFade ? x / 150 : 1;
     }
     function handleTouchEnd(e) {
+      readyToFade = null;
+
+      if (e.changedTouches[0].identifier !== currentTouch) {
+        return; // just a tap!
+      }
       const [x, y] = [e.changedTouches[0].screenX, e.changedTouches[0].screenY];
-      if (x < window.innerWidth / 2) {
+      if (x < window.innerWidth / 4) {
         reject();
       }
-      if (x > window.innerWidth - window.innerWidth / 8) {
+      if (x > rightSwipeThreshold && prevX < rightSwipeThreshold) {
+        foodItem.style.transform = 'translateY(-100px)';
         accept(state.places[state.currentPlaceIndex]);
-        return;
       }
-      foodItem.style.transform = '';
+      foodItem.style.opacity = 1;
+      foodItem.style.transform = 'translateX(0)';
     }
 
     return foodItem;
+  };
+  document.ontouchmove = function (e) {
+    e.preventDefault();
   };
   return html`
     <body class="bg-light-red helvetica tc">
