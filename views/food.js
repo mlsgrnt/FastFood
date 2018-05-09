@@ -55,7 +55,7 @@ function view(state, emit) {
     }
     function handleTouchEnd(e) {
       const [x, y] = [e.changedTouches[0].screenX, e.changedTouches[0].screenY];
-      if (x < window.innerWidth / 3) {
+      if (x < window.innerWidth / 2) {
         reject();
       }
       if (x > window.innerWidth - window.innerWidth / 3)
