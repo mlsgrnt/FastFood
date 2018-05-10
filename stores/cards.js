@@ -2,6 +2,11 @@ module.exports = store;
 
 function store(state, emitter) {
   emitter.on('DOMContentLoaded', () => {
+    // Disable scrolling.
+    document.ontouchmove = function (e) {
+      e.preventDefault();
+    };
+
     let rejectFunction = null;
     let acceptFunction = null;
 
@@ -76,7 +81,7 @@ function store(state, emitter) {
       screenX = currentX - startX;
 
       targetX = 0;
-      if (Math.abs(screenX) > targetBCR.width * 0.25) {
+      if (Math.abs(screenX) > targetBCR.width * 0.45) {
         targetX = (screenX > 0) ? targetBCR.width : -targetBCR.width;
       }
       draggingCard = false;
@@ -87,12 +92,12 @@ function store(state, emitter) {
       if (draggingCard) {
         screenX = currentX - startX;
       } else {
-        screenX += (targetX - screenX) / 5;
+        screenX += (targetX - screenX) / 15;
       }
 
       const normalizedDragDistance = (Math.abs(screenX) / targetBCR.width);
       const swipeDirection = screenX / targetBCR.width < 0 ? 'left' : 'right';
-      const opacity = 1 - Math.pow(normalizedDragDistance, 4);
+      const opacity = 1 - Math.pow(normalizedDragDistance, 2);
       target.style.transform = `translateX(${screenX}px)`;
       target.style.opacity = opacity;
 

@@ -12,7 +12,7 @@ function view(state, emit) {
   function accept(place) {
     state.chosenPlace = place;
     // temp:
-    window.location = `https://citymapper.com/directions?startcoord=${
+    window.location = `citymapper://directions?startcoord=${
       state.position.latitude
     }%2C${state.position.longitude}&endcoord=${place.geometry.location.lat}%2C${
       place.geometry.location.lng
@@ -45,7 +45,7 @@ function view(state, emit) {
 }</h1>
     <div class="card-container">
       ${state.places.filter(place => place.ready).map(place => Place(place))}
-      loading or no more cards message!
+      ${state.places.length === 0 ? 'Loading...' : html`<span>You hated all the options nearby. <a href="/" class="link navy b">Maybe try another food?</a></span>`}
     </div>
     </body>
   `;
