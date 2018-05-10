@@ -47,6 +47,7 @@ function view(state, emit) {
   }
 
   const Place = function (place) {
+    // TODO: TODO TODO
     const foodItem = html`
     <div id="${place.id}" class="card bg-near-white dark-gray pa3 h-auto tl">
       <div class="pv2 w-100 h5 db" style="flex:2;background:url(${place.photo}) 50% 50% no-repeat;background-size: cover;" ></div>
@@ -60,6 +61,11 @@ function view(state, emit) {
   };
 
   emit('cards:reset', reject, (id) => { accept(state.places.find(place => place.id === id)); });
+  // Disable scrolling.
+  document.ontouchmove = function (e) {
+    e.preventDefault();
+  };
+
   return html`
     <body class="bg-light-red helvetica tc">
     <h1 class="f1 pv0 mv0">${

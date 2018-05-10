@@ -2,11 +2,6 @@ module.exports = store;
 
 function store(state, emitter) {
   emitter.on('DOMContentLoaded', () => {
-    // Disable scrolling.
-    document.ontouchmove = function (e) {
-      e.preventDefault();
-    };
-
     let rejectFunction = null;
     let acceptFunction = null;
 
