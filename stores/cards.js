@@ -53,7 +53,6 @@ function store(state, emitter) {
       if (!target) {
         return;
       }
-
       targetBCR = target.getBoundingClientRect();
 
       startX = e.pageX || e.touches[0].pageX;

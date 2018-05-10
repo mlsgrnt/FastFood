@@ -22,8 +22,8 @@ function view(state, emit) {
 
   const Place = function (place) {
     const foodItem = html`
-    <div id="${place.id}"class="card" bad="bg-near-white dark-gray shadow-2 br2 pa3 h-auto min-vh-75 ma1 tl">
-      <img class="w-100 pv2 h-max-5" src="${place.photo}" />
+    <div id="${place.id}" class="card bg-near-white dark-gray pa3 h-auto tl">
+      <div class="pv2 w-100 h5 db" style="flex:2;background:url(${place.photo}) 50% 50% no-repeat;background-size: cover;" ></div>
       <div class="mh2">
         <h3 class="mb0 pb0 helvetica">${place.name}</h3>
         <h4 class="mv0 pv0 gray">${place.rating} stars</h4>
@@ -33,10 +33,6 @@ function view(state, emit) {
     : ''
 }
       </div>
-      <div>
-        <button onclick=${reject}>reject</button>
-        <button onclick=${() => accept(place)}>accept</button>
-      </div>
     </div>`;
     return foodItem;
   };
@@ -44,7 +40,7 @@ function view(state, emit) {
   emit('cards:reset', reject, (id) => { accept(state.places.find(place => place.id === id)); });
   return html`
     <body class="bg-light-red helvetica tc">
-    <h1>${
+    <h1 class="f1 pv0 mv0">${
   state.foods.find(food => food.name === state.params.wildcard).emoji
 }</h1>
     <div class="card-container">
