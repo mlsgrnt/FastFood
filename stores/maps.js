@@ -28,6 +28,9 @@ function store(state, emitter) {
       if (placeIndex > state.places.length - 1) {
         return; // we good
       }
+      // set loaded flag
+      state.places[placeIndex].ready = true;
+
       const endCoord = state.places[placeIndex].geometry.location;
       fetch(`https://coral-biplane.glitch.me/citymapper?startcoord=${
         state.position.latitude

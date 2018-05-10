@@ -4,6 +4,8 @@ module.exports = view;
 
 function view(state, emit) {
   function reject() {
+    // TODO: no more currentpalce idnex :(
+    state.places[state.currentPlaceIndex].ready = false; // no longer render!
     state.currentPlaceIndex++;
     emit(state.events.RENDER);
     emit('maps:getDetail', state.currentPlaceIndex + 2); // always be a few ahead!
@@ -36,7 +38,7 @@ function view(state, emit) {
         <h4 class="mv0 pv0 gray">${place.rating} stars</h4>
         ${
   place.travelTime
-    ? html`<h4>${place.travelTime} minutes away</h4>`
+    ? html`<h4 class="mv0 pv0 gray">${place.travelTime} minutes away</h4>`
     : ''
 }
       </div>
@@ -100,7 +102,7 @@ function view(state, emit) {
     <h1>${
   state.foods.find(food => food.name === state.params.wildcard).emoji
 }</h1>
-    ${Place(state.places[state.currentPlaceIndex])}
+    ${state.places.filter(place => place.ready).map(place => Place(place))}
     </body>
   `;
 }

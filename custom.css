@@ -13,9 +13,6 @@
   }
 }
 
-.shadow-2 {
-  animation: slide-up 0.4s ease;
-}
 .min-vh-75 {
   min-height: 75vh;
 }
