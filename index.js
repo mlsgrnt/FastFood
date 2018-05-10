@@ -14,7 +14,6 @@ if (process.env.NODE_ENV !== 'production') {
 app.use((state) => {
   state.foods = [
     { name: 'korean', emoji: '🍜' },
-    { name: 'spaghetti', emoji: '🍝' },
     { name: 'sushi', emoji: '🍣' },
     { name: 'dumpling', emoji: '🥟' },
     { name: 'chinese', emoji: '🥡' },
@@ -30,6 +29,8 @@ app.use((state) => {
     { name: 'burrito', emoji: '🌯' },
     { name: 'bakery', emoji: '🥖' },
     { name: 'pancakes', emoji: '🥞' },
+    { name: 'doner', emoji: 'döner' },
+    { name: '"cookie dough"', emoji: 'cookie dough' },
   ];
 });
 app.use(require('./stores/maps'));

@@ -9,19 +9,18 @@ function view(state, emit) {
 
   return html`
     <body class="bg-dark-red light-gray helvetica">
-      <h1>fast food</h1>
-      <ul class="f1" >
-        ${state.foods.map(
-          food =>
-            html`<li><a href="/${food.name}" id=${
-              food.name
-            } onclick=${handleClick}>${food.emoji}</a></li>`
-        )}
+      <h1><span class="i">fast</span> food</h1>
+      <ul class="f-headline" >
+        ${state.foods.map(food =>
+    html`<li><a href="/${food.name}" id=${
+      food.name
+    } onclick=${handleClick}>${food.emoji}</a></li>`)}
       </ul>
     </body>
   `;
 
   function handleClick(e) {
+    window.scrollTo(0, 0);
     emit('maps:findNearby', e.target.id);
   }
 }

@@ -20,18 +20,40 @@ function view(state, emit) {
     console.log('celebrate!');
   }
 
+  function renderRating(rating) {
+    let reaction = '🤷';
+    if (rating > 0) {
+      reaction = '😷';
+    }
+    if (rating > 1) {
+      reaction = '😨';
+    }
+    if (rating > 2) {
+      reaction = '😕';
+    }
+    if (rating > 3) {
+      reaction = '😐';
+    }
+    if (rating > 4) {
+      reaction = '🙂';
+    }
+    if (rating > 4.5) {
+      reaction = '😀';
+    }
+    if (rating === 5) {
+      reaction = '😃';
+    }
+    return reaction;
+  }
+
   const Place = function (place) {
     const foodItem = html`
     <div id="${place.id}" class="card bg-near-white dark-gray pa3 h-auto tl">
       <div class="pv2 w-100 h5 db" style="flex:2;background:url(${place.photo}) 50% 50% no-repeat;background-size: cover;" ></div>
-      <div class="mh2">
-        <h3 class="mb0 pb0 helvetica">${place.name}</h3>
-        <h4 class="mv0 pv0 gray">${place.rating} stars</h4>
-        ${
-  place.travelTime
-    ? html`<h4 class="mv0 pv0 gray">${place.travelTime} minutes away</h4>`
-    : ''
-}
+      <div class="mh2 w-100">
+        <h3 class="mb0 pb0 pr0 mr0 f3 helvetica mw5">${place.name}</h3>
+        <h4 class="mv0 pv0 gray">${place.travelTime ? `${place.travelTime} minutes away` : 'Some ways away'}</h4>
+        <h4 class="mv0 pv0 gray f1 fr">${renderRating(place.rating)}</h4>
       </div>
     </div>`;
     return foodItem;
