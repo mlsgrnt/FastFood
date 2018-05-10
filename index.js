@@ -34,6 +34,7 @@ app.use((state) => {
 });
 app.use(require('./stores/maps'));
 app.use(require('./stores/location'));
+app.use(require('./stores/cards'));
 
 app.route('/', require('./views/main'));
 app.route('/*', require('./views/food'));

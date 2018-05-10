@@ -7,7 +7,6 @@ function view(state, emit) {
     // TODO: no more currentpalce idnex :(
     state.places[state.currentPlaceIndex].ready = false; // no longer render!
     state.currentPlaceIndex++;
-    emit(state.events.RENDER);
     emit('maps:getDetail', state.currentPlaceIndex + 2); // always be a few ahead!
   }
   function accept(place) {
@@ -22,18 +21,10 @@ function view(state, emit) {
   }
 
   const Place = function (place) {
-    // TODO: handle 0 items found
-    if (place === undefined) {
-      return state.currentPlaceIndex === undefined
-        ? 'loading'
-        : 'You didnt like anything. maybe try again?';
-    }
     const foodItem = html`
-    <div id="${
-  place.id
-}"class="bg-near-white dark-gray shadow-2 br2 pa3 h-auto min-vh-75 ma1 tl">
+    <div id="${place.id}"class="card" bad="bg-near-white dark-gray shadow-2 br2 pa3 h-auto min-vh-75 ma1 tl">
       <img class="w-100 pv2 h-max-5" src="${place.photo}" />
-      <div>
+      <div class="mh2">
         <h3 class="mb0 pb0 helvetica">${place.name}</h3>
         <h4 class="mv0 pv0 gray">${place.rating} stars</h4>
         ${
@@ -47,62 +38,19 @@ function view(state, emit) {
         <button onclick=${() => accept(place)}>accept</button>
       </div>
     </div>`;
-    foodItem.addEventListener('touchstart', handleTouchStart);
-    foodItem.addEventListener('touchmove', handleTouchMove);
-    foodItem.addEventListener('touchend', handleTouchEnd);
-
-    let prevX = null;
-    let prevY = null;
-    let readyToFade = false;
-    let currentTouch = null;
-
-    const rightSwipeThreshold = window.innerWidth - (window.innerWidth / 4);
-
-    function handleTouchStart(e) {
-      [prevX, prevY] = [
-        e.changedTouches[0].screenX,
-        e.changedTouches[0].screenY,
-      ];
-    }
-    function handleTouchMove(e) {
-      currentTouch = e.changedTouches[0].identifier;
-      const [x, y] = [e.changedTouches[0].screenX, e.changedTouches[0].screenY];
-      foodItem.style.transform = `translateX(${x - prevX}px)`;
-      if (x < prevX && prevX > 150) {
-        readyToFade = true;
-      }
-
-      foodItem.style.opacity = x < 150 && readyToFade ? x / 150 : 1;
-    }
-    function handleTouchEnd(e) {
-      readyToFade = null;
-
-      if (e.changedTouches[0].identifier !== currentTouch) {
-        return; // just a tap!
-      }
-      const [x, y] = [e.changedTouches[0].screenX, e.changedTouches[0].screenY];
-      if (x < window.innerWidth / 4) {
-        reject();
-      }
-      if (x > rightSwipeThreshold && prevX < rightSwipeThreshold) {
-        foodItem.style.transform = 'translateY(-100px)';
-        accept(state.places[state.currentPlaceIndex]);
-      }
-      foodItem.style.opacity = 1;
-      foodItem.style.transform = 'translateX(0)';
-    }
-
     return foodItem;
   };
-  document.ontouchmove = function (e) {
-    e.preventDefault();
-  };
+
+  emit('cards:reset', reject, (id) => { accept(state.places.find(place => place.id === id)); });
   return html`
     <body class="bg-light-red helvetica tc">
     <h1>${
   state.foods.find(food => food.name === state.params.wildcard).emoji
 }</h1>
-    ${state.places.filter(place => place.ready).map(place => Place(place))}
+    <div class="card-container">
+      ${state.places.filter(place => place.ready).map(place => Place(place))}
+      loading or no more cards message!
+    </div>
     </body>
   `;
 }

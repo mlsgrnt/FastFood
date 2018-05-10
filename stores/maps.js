@@ -37,6 +37,9 @@ function store(state, emitter) {
       },${state.position.longitude}&endcoord=${endCoord.lat},${endCoord.lng}`).then((data) => {
         data.json().then((json) => {
           state.places[placeIndex].travelTime = json.travel_time_minutes;
+          if (placeIndex === state.currentPlaceIndex) {
+            emitter.emit(state.events.RENDER);
+          }
         });
       });
       if (state.places[placeIndex].photos) {
