@@ -13,24 +13,23 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use((state) => {
   state.foods = [
-    { name: 'korean', emoji: '🍜' },
-    { name: 'sushi', emoji: '🍣' },
-    { name: 'dumpling', emoji: '🥟' },
-    { name: 'chinese', emoji: '🥡' },
     { name: '"ice cream"', emoji: '🍦' },
-    { name: 'candy', emoji: '🍬' },
+    { name: 'bakery', emoji: '🥖' },
+    { name: 'pancakes', emoji: '🥞' },
+    { name: 'sweet', emoji: '🍬' },
+    { name: 'sandwich', emoji: '🥪' },
     { name: 'cafe', emoji: '☕' },
+    { name: 'sushi', emoji: '🍣' },
+    { name: 'dumplings', emoji: '🥟' },
+    { name: 'korean food', emoji: '🍜' },
+    { name: 'chinese food', emoji: '🥡' },
     { name: 'steak', emoji: '🥩' },
     { name: 'burger', emoji: '🍔' },
     { name: 'pizza', emoji: '🍕' },
     { name: 'hot dog', emoji: '🌭' },
-    { name: 'sandwich', emoji: '🥪' },
     { name: 'taco', emoji: '🌮' },
     { name: 'burrito', emoji: '🌯' },
-    { name: 'bakery', emoji: '🥖' },
-    { name: 'pancakes', emoji: '🥞' },
-    { name: 'doner', emoji: 'döner' },
-    { name: '"cookie dough"', emoji: 'cookie dough' },
+    { name: 'doner', emoji: '🥙' },
   ];
 });
 app.use(require('./stores/maps'));

@@ -56,3 +56,10 @@ body {
   flex: 1;
   line-height: 0;
 }
+
+.foodGrid {
+  display: grid;
+  width: 100vw;
+  grid-template-columns: repeat(3, 30vw);
+  grid-gap: 3.33333333333333vw;
+}
