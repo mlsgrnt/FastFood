@@ -12,7 +12,8 @@ function view(state, emit) {
   function accept(place) {
     state.chosenPlace = place;
     // temp:
-    window.location = `citymapper://directions?startcoord=${
+    // citymapper://directions
+    window.location = `https://citymapper.com/directions?startcoord=${
       state.position.latitude
     }%2C${state.position.longitude}&endcoord=${place.geometry.location.lat}%2C${
       place.geometry.location.lng

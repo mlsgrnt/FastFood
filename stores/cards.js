@@ -19,16 +19,21 @@ function store(state, emitter) {
       rejectFunction = reject;
       acceptFunction = accept;
 
+      target = null;
+
       cards = document.querySelectorAll('.card');
+      if (!state.hooked) {
+        document.addEventListener('touchstart', onStart);
+        document.addEventListener('touchmove', onMove);
+        document.addEventListener('touchend', onEnd);
+
+        document.addEventListener('mousedown', onStart);
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onEnd);
+
+        state.hooked = true;
+      }
     });
-
-    document.addEventListener('touchstart', onStart);
-    document.addEventListener('touchmove', onMove);
-    document.addEventListener('touchend', onEnd);
-
-    document.addEventListener('mousedown', onStart);
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onEnd);
 
     function findCard(target) {
       while (!target.classList.contains('card')) {
@@ -80,13 +85,16 @@ function store(state, emitter) {
       if (draggingCard) {
         screenX = currentX - startX;
       } else {
-        screenX += (targetX - screenX) / 50; // TODO OOOOO
+        const stepCount = targetX === 0 ? 15 : 12;// TODO OOOOO
+        screenX += (targetX - screenX) / stepCount;
       }
 
-      const normalizedDragDistance = (Math.abs(screenX) / targetBCR.width);
       const swipeDirection = screenX / targetBCR.width < 0 ? 'left' : 'right';
+
+      const normalizedDragDistance = (Math.abs(screenX) / targetBCR.width);
       const opacity = 1 - Math.pow(normalizedDragDistance, 2);
-      target.style.transform = `translateX(${screenX}px)`;
+      const rotation = -(screenX / targetBCR.width) * 12;
+      target.style.transform = `translateX(${screenX}px) rotate(${rotation}deg)`;
       target.style.opacity = opacity;
 
       const isNearlyAtStart = (Math.abs(screenX) < 0.01);
