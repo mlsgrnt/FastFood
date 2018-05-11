@@ -13,19 +13,13 @@ function store(state, emitter) {
     let screenX = 0;
     let targetX = 0;
     let draggingCard = false;
+    let friction = null;
 
     emitter.on('cards:reset', (reject, accept) => {
       rejectFunction = reject;
       acceptFunction = accept;
 
       cards = document.querySelectorAll('.card');
-      target = null;
-      targetBCR = null;
-      startX = 0;
-      currentX = 0;
-      screenX = 0;
-      targetX = 0;
-      draggingCard = false;
     });
 
     document.addEventListener('touchstart', onStart);
@@ -67,13 +61,12 @@ function store(state, emitter) {
     }
     function onMove(e) {
       if (!target) return;
-      currentX = e.pageX || e.touches[0].pageX;
+      const newX = e.pageX || e.touches[0].pageX;
+      friction = (currentX - newX) / (currentX - startX);
+      currentX = newX;
     }
     function onEnd(e) {
       if (!target) return;
-
-      currentX = e.pageX || e.changedTouches[0].pageX;
-      screenX = currentX - startX;
 
       targetX = 0;
       if (Math.abs(screenX) > targetBCR.width * 0.35) {
@@ -87,7 +80,7 @@ function store(state, emitter) {
       if (draggingCard) {
         screenX = currentX - startX;
       } else {
-        screenX += (targetX - screenX) / 25;
+        screenX += (targetX - screenX) / (50 * (1 / Math.abs(100 * friction)));
       }
 
       const normalizedDragDistance = (Math.abs(screenX) / targetBCR.width);
