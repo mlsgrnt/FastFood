@@ -66,7 +66,7 @@ function view(state, emit) {
           <h4 class="gray pa0 ma0 cardSubtitle">${place.travelTime ? `${place.travelTime}` : 'A few'} minutes away</h4>
         </div>
         <div class="cardRating ma0 pa0">
-          <span class="gray f1 pa0 ma0" onclick=${toggleTrueRating}>${renderRating(place.rating)}</span>
+          <span class="gray f1 pa0 ma0" ontouchend=${toggleTrueRating} ontap=${toggleTrueRating} onclick=${toggleTrueRating}>${renderRating(place.rating)}</span>
         </div>
       </div>
     </div>`;
