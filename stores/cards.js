@@ -62,7 +62,7 @@ function store(state, emitter) {
     function onMove(e) {
       if (!target) return;
       const newX = e.pageX || e.touches[0].pageX;
-      friction = (currentX - newX) / (currentX - startX);
+      friction = (currentX - startX);
       currentX = newX;
     }
     function onEnd(e) {
@@ -80,7 +80,7 @@ function store(state, emitter) {
       if (draggingCard) {
         screenX = currentX - startX;
       } else {
-        screenX += (targetX - screenX) / (50 * (1 / Math.abs(100 * friction)));
+        screenX += (targetX - screenX) / 50; // TODO OOOOO
       }
 
       const normalizedDragDistance = (Math.abs(screenX) / targetBCR.width);
