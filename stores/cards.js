@@ -85,7 +85,7 @@ function store(state, emitter) {
       if (draggingCard) {
         screenX = currentX - startX;
       } else {
-        const stepCount = targetX === 0 ? 15 : 12;// TODO OOOOO
+        const stepCount = targetX === 0 ? 15 : 8;// TODO OOOOO
         screenX += (targetX - screenX) / stepCount;
       }
 
@@ -93,7 +93,7 @@ function store(state, emitter) {
 
       const normalizedDragDistance = (Math.abs(screenX) / targetBCR.width);
       const opacity = 1 - Math.pow(normalizedDragDistance, 2);
-      const rotation = -(screenX / targetBCR.width) * 5;
+      const rotation = -(screenX / targetBCR.width) * 2.5;
       target.style.transform = `translateX(${screenX}px) rotate(${rotation}deg)`;
       target.style.opacity = opacity;
 
