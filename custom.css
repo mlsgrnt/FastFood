@@ -41,3 +41,18 @@ body {
 .h6 {
   height: 28rem;
 }
+
+.cardInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+}
+.cardText {
+  flex: 9;
+}
+.cardRating {
+  flex: 1;
+  line-height: 0;
+}

@@ -76,7 +76,7 @@ function store(state, emitter) {
       screenX = currentX - startX;
 
       targetX = 0;
-      if (Math.abs(screenX) > targetBCR.width * 0.45) {
+      if (Math.abs(screenX) > targetBCR.width * 0.35) {
         targetX = (screenX > 0) ? targetBCR.width : -targetBCR.width;
       }
       draggingCard = false;

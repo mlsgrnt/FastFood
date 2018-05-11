@@ -40,21 +40,33 @@ function view(state, emit) {
     if (rating > 4.5) {
       reaction = '😀';
     }
-    if (rating === 5) {
+    if (rating > 4.8) {
       reaction = '😃';
     }
-    return reaction;
+    console.log(state.showTrueRating);
+    return state.showTrueRating ? rating : reaction;
   }
 
   const Place = function (place) {
     // TODO: TODO TODO
+
+    function toggleTrueRating() {
+      console.log(state.showTrueRating, !state.showTrueRating);
+      state.showTrueRating = !state.showTrueRating;
+      emit(state.events.RENDER);
+    }
+
     const foodItem = html`
-    <div id="${place.id}" class="card bg-near-white dark-gray pa3 h-auto tl">
-      <div class="pv2 w-100 h5 db" style="flex:2;background:url(${place.photo}) 50% 50% no-repeat;background-size: cover;" ></div>
-      <div class="mh2 w-100">
-        <h3 class="mb0 pb0 pr0 mr0 f3 helvetica mw5">${place.name}</h3>
-        <h4 class="mv0 pv0 gray">${place.travelTime ? `${place.travelTime} minutes away` : 'Some ways away'}</h4>
-        <h4 class="mv0 pv0 gray f1 fr">${renderRating(place.rating)}</h4>
+    <div id="${place.id}" class="card bg-near-white dark-gray h-auto tl">
+      <div class="pv2 w-100 h5 db" style="flex:2;background:url(${place.photo}) 50% 50% no-repeat;background-size: cover;border-radius:3px 3px 0 0 " ></div>
+      <div class="cardInfo pt3 pb4 ph3">
+        <div class="cardText ma0 pa0">
+          <h3 class="f3 pa0 ma0 helvetica cardTitle">${place.name}</h3>
+          <h4 class="gray pa0 ma0 cardSubtitle">${place.travelTime ? `${place.travelTime}` : 'A few'} minutes away</h4>
+        </div>
+        <div class="cardRating ma0 pa0">
+          <span class="gray f1 pa0 ma0" onclick=${toggleTrueRating}>${renderRating(place.rating)}</span>
+        </div>
       </div>
     </div>`;
     return foodItem;
