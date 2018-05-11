@@ -43,7 +43,6 @@ function view(state, emit) {
     if (rating > 4.8) {
       reaction = '😃';
     }
-    console.log(state.showTrueRating);
     return state.showTrueRating ? rating : reaction;
   }
 
