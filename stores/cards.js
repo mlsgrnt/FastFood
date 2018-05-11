@@ -87,7 +87,7 @@ function store(state, emitter) {
       if (draggingCard) {
         screenX = currentX - startX;
       } else {
-        screenX += (targetX - screenX) / 15;
+        screenX += (targetX - screenX) / 25;
       }
 
       const normalizedDragDistance = (Math.abs(screenX) / targetBCR.width);
