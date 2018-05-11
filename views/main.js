@@ -1,12 +1,16 @@
 const html = require('choo/html');
 
-const TITLE = 'fastfood - main';
+const TITLE = 'fastfood';
 
 module.exports = view;
 
 function view(state, emit) {
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE);
 
+  // Enable scrolling.
+  document.ontouchmove = function (e) {
+    return true;
+  };
   return html`
     <body class="bg-dark-red light-gray helvetica">
       <h1><span class="i">fast</span> food</h1>
