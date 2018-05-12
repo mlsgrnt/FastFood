@@ -14,7 +14,7 @@ function view(state, emit) {
     // temp:
     // citymapper://directions
     // https://citymapper.com/directions
-    window.location = `https://citymapper.com/directions?startcoord=${
+    window.location = `citymapper://directions?startcoord=${
       state.position.latitude
     }%2C${state.position.longitude}&endcoord=${place.geometry.location.lat}%2C${
       place.geometry.location.lng
@@ -52,13 +52,12 @@ function view(state, emit) {
     // TODO: TODO TODO
 
     function toggleTrueRating() {
-      console.log(state.showTrueRating, !state.showTrueRating);
       state.showTrueRating = !state.showTrueRating;
       emit(state.events.RENDER);
     }
 
     const foodItem = html`
-    <div id="${place.id}" class="card bg-near-white dark-gray h-auto tl">
+    <div id="${place.id}" class="card mt0 pt0 mb7 bg-near-white dark-gray h-auto tl">
       <div class="pv2 w-100 h5 db" style="flex:2;background:url(${place.photo}) 50% 50% no-repeat;background-size: cover;border-radius:3px 3px 0 0 " ></div>
       <div class="cardInfo pt3 pb4 ph3">
         <div class="cardText ma0 pa0">
@@ -74,17 +73,13 @@ function view(state, emit) {
   };
 
   emit('cards:reset', reject, (id) => { accept(state.places.find(place => place.id === id)); });
-  // Disable scrolling.
-  document.ontouchmove = function (e) {
-    e.preventDefault();
-  };
 
   return html`
-    <body class="bg-light-red helvetica tc">
-    <h1 class="f1 pv0 mv0">${
+    <body class=" helvetica tc">
+    <span class="f-headline pv0 mv0 emojiTitle">${
   state.foods.find(food => food.name === state.params.wildcard).emoji
-}</h1>
-    <div class="card-container">
+}</span>
+    <div class="card-container ph3">
       ${state.places.filter(place => place.ready).map(place => Place(place))}
       ${state.places.length === 0 ? 'Loading...' : html`<span>You hated all the options nearby. <a href="/" class="link navy b">Maybe try another food?</a></span>`}
     </div>

@@ -30,6 +30,7 @@ app.use((state) => {
     { name: 'taco', emoji: '🌮' },
     { name: 'burrito', emoji: '🌯' },
     { name: 'doner', emoji: '🥙' },
+    { name: 'food', emoji: '⁉️' },
   ];
 });
 app.use(require('./stores/maps'));
