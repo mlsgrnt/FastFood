@@ -14,12 +14,11 @@ function view(state, emit) {
     // temp:
     // citymapper://directions
     // https://citymapper.com/directions
-    window.location = `citymapper://directions?startcoord=${
-      state.position.latitude
-    }%2C${state.position.longitude}&endcoord=${place.geometry.location.lat}%2C${
-      place.geometry.location.lng
-    }&endname=${place.name}&endaddress=${place.vicinity}`;
-    console.log('celebrate!');
+    const direction = `?startcoord=${state.position.latitude}%2C${state.position.longitude}&endcoord=${place.geometry.location.lat}%2C${place.geometry.location.lng}&endname=${place.name}&endaddress=${place.vicinity}`;
+    window.location = `citymapper://directions?${direction}`;
+    window.open(`https://citymapper.com/directions${direction}`);
+    // in case user returns
+    reject();
   }
 
   function renderRating(rating) {
@@ -79,7 +78,7 @@ function view(state, emit) {
     <span class="f-headline pv0 mv0 emojiTitle">${
   state.foods.find(food => food.name === state.params.wildcard).emoji
 }</span>
-    <div class="card-container ph3">
+    <div class="card-container ph3 pt1">
       ${state.places.filter(place => place.ready).map(place => Place(place))}
       ${state.places.length === 0 ? 'Loading...' : html`<span>You hated all the options nearby. <a href="/" class="link navy b">Maybe try another food?</a></span>`}
     </div>

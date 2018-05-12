@@ -67,7 +67,7 @@ function store(state, emitter) {
     function onMove(e) {
       if (!target) return;
       const newX = e.pageX || e.touches[0].pageX;
-      friction = (currentX - startX);
+      friction = (currentX - newX);
       currentX = newX;
     }
     function onEnd(e) {
@@ -85,7 +85,8 @@ function store(state, emitter) {
       if (draggingCard) {
         screenX = currentX - startX;
       } else {
-        const stepCount = targetX === 0 ? 15 : 8;// TODO OOOOO
+        const stepCount = (1 - Math.abs(friction / 100)) * 40;// TODO OOOOO
+        console.log(stepCount);
         screenX += (targetX - screenX) / stepCount;
       }
 
@@ -97,7 +98,7 @@ function store(state, emitter) {
       target.style.transform = `translateX(${screenX}px) rotate(${rotation}deg)`;
       target.style.opacity = opacity;
 
-      const isNearlyAtStart = (Math.abs(screenX) < 0.01);
+      const isNearlyAtStart = (Math.abs(screenX) < 0.001);
       const isNearlyGone = (opacity < 0.01);
 
       if (!draggingCard) {
@@ -127,7 +128,7 @@ function store(state, emitter) {
             // we know this is the next card:
             card.style.transform = `translateY(${targetBCR.height}px)`;
             requestAnimationFrame(() => {
-              card.style.transition = 'transform .3s cubic-bezier(0,0,0.31,1)';
+              card.style.transition = 'transform .4s cubic-bezier(0,0,0.31,1)';
               card.style.transform = 'none';
             });
             card.addEventListener('transitionend', onTransitionEnd);
