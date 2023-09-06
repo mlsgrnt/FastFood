@@ -32,16 +32,23 @@ function store(state, emitter) {
       state.places[placeIndex].ready = true;
 
       const endCoord = state.places[placeIndex].geometry.location;
-      fetch(`https://coral-biplane.glitch.me/citymapper?startcoord=${
-        state.position.latitude
-      },${state.position.longitude}&endcoord=${endCoord.lat},${endCoord.lng}`).then((data) => {
-        data.json().then((json) => {
-          state.places[placeIndex].travelTime = json.travel_time_minutes;
-          if (placeIndex === state.currentPlaceIndex) {
-            emitter.emit(state.events.RENDER);
-          }
-        });
-      });
+      // fetch(`https://coral-biplane.glitch.me/citymapper?startcoord=${
+      //   state.position.latitude
+      // },${state.position.longitude}&endcoord=${endCoord.lat},${endCoord.lng}`).then((data) => {
+      //   data.json().then((json) => {
+      //     state.places[placeIndex].travelTime = json.travel_time_minutes;
+      //     if (placeIndex === state.currentPlaceIndex) {
+      //       emitter.emit(state.events.RENDER);
+      //     }
+      //   });
+      // });
+      fetch(`https://coral-biplane.glitch.me/graphhopper/route?point=${state.position.latitude},${state.position.longitude}&point=${endCoord.lat},${endCoord.lng}&vehicle=foot&debug=false&type=json&calc_points=false&instructions=false`)
+      .then(data => data.json().then(json => {
+        state.places[placeIndex].travelTime = json.paths[0].time / 1000 / 60
+        if (placeIndex === state.currentPlaceIndex) {
+                emitter.emit(state.events.RENDER);
+              }
+      }))
       if (state.places[placeIndex].photos) {
         fetch(
           `https://coral-biplane.glitch.me/image?ref=${
